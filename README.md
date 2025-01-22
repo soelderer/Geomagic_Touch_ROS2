@@ -3,7 +3,7 @@
 # Installation von ROS2
 Das Robot Operating System (ROS) ist eine Open-Source-Plattform für die Entwicklung von Robotikanwendungen, die aus einer Sammlung von Software-Bibliotheken, Werkzeugen und Treibern besteht. Es gibt verschiedene Versionen. Wegen längerem Support empfiehlt es sich derzeit "Humble Hawksbill" zu installieren.
 
-ROS2 gibt es für verschiedene Betriebssysteme. Für Ubuntu folgt man dieser Anleitung: 
+ROS2 gibt es für verschiedene Betriebssysteme. Für Ubuntu folgt man dieser Anleitung:
 https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html
 Wichtig ist, die passende Ubuntu-Version zu haben (hier 22.04).
 
@@ -18,12 +18,12 @@ $ sudo apt install ros-dev-tools
 
 # Installation der Gerätetreiber
 Nun müssen die Gerätetreiber des Herstellers installiert werden. Dazu lädt man sich auf der folgenden Webseite (1) den OpenHaptics Installer und (2) den Touch Device Driver herunter:
-https://support.3dsystems.com/s/article/OpenHaptics-for-Linux-Developer-Edition-v34?language=en_US. 
+https://support.3dsystems.com/s/article/OpenHaptics-for-Linux-Developer-Edition-v34?language=en_US.
 
 ### (1) OpenHaptics Installer
 Man entpackt das heruntergeladene tar.gz-Archiv und wechselt in den Ordner:
 ```
-~/downloads $ tar xf openhaptics_3.4-0-developer-edition-amd64.tar.gz 
+~/downloads $ tar xf openhaptics_3.4-0-developer-edition-amd64.tar.gz
 ~/downloads $ cd openhaptics_3.4-0-developer-edition-amd64
 ```
 
@@ -43,7 +43,7 @@ Vor der Verwendung muss man neustarten.
 ### (2) Touch Device Driver
 Man entpackt das heruntergeladene tar.gz-Archiv und wechselt in den Ordner:
 ```
-~/downloads $ tar xf TouchDriver_2023_11_15.tgz                      
+~/downloads $ tar xf TouchDriver_2023_11_15.tgz
 ~/downloads $ cd TouchDriver_2023_11_15
 ```
 
@@ -58,36 +58,17 @@ Falls man eine Fehlermeldung bekommt vonwegen "unknown: !=", kann man folgendes 
 ```
 
 # Installation des ROS2-Treibers
-Man lädt den ROS2-Treiber herunter mit:
+Der Sourcecode des ROS2-Treibers befindet sich in diesem Repository. Man lädt
+es z.B. über die Github-Webseite runter ("<> Code" - "Download zip").
+
+Nach dem Entpacken ...
 ```
-~/downloads $ git clone https://github.com/stevens-armlab/Geomagic_Touch_ROS2.git
+~/downloads $ unzip Geomagic_Touch_ROS2-main
 ```
 
-und wechselt in den Ordner:
+...wechselt man in den Ordner:
 ```
-~/downloads $ cd ~/Geomagic_Touch_ROS2
-```
-
-Dann muss man einen Patch anwenden, der leider noch nicht in die aktuelle Version auf GitHub übernommen wurde (https://github.com/stevens-armlab/Geomagic_Touch_ROS2/pull/1):
-
-```
-~/downloads/Geomagic_Touch_ROS2 $ git pull origin pull/1/head
-```
-
-Dann muss man in der Datei `omni_common/CMakeLists.txt` einige Codezeilen auskommentieren, da sonst die Installation fehlschlägt:
-
-```
- install(
-  DIRECTORY include/${PROJECT_NAME}/
-   DESTINATION include/${PROJECT_NAME}/
- )
-```
- ...wird zu:
-```
-#  install(
-#    DIRECTORY include/${PROJECT_NAME}/
-#    DESTINATION include/${PROJECT_NAME}/
-#  )
+~/downloads $ cd Geomagic_Touch_ROS2
 ```
 
 Um ROS2 nach der Installation zu nutzen, muss die ROS2-Umgebung initialisiert werden. Dies geschieht durch das Laden der entsprechenden Umgebungsvariablen mit dem folgendem Befehl. Das ist immer nötig, wenn ein neues Terminal geöffnet wird.
@@ -115,7 +96,7 @@ source /opt/ros/humble/setup.bash
 source ~/downloads/Geomagic_Touch_ROS2/install/setup.bash`
 ```
 # Verwendung
-Wenn alles richtig installiert wurde, kann man den ROS2-Treiber wie folgt verwenden. 
+Wenn alles richtig installiert wurde, kann man den ROS2-Treiber wie folgt verwenden.
 Zuerst lädt man den ROS2-Treiber. Das funktioniert nur dann fehlerfrei, wenn das Haptic Device per USB verbunden ist.
 ```
 $ ros2 launch omni_common omni_state.launch.py
