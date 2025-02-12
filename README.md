@@ -1,14 +1,14 @@
 # Geomagic_Touch_ROS2
 
 # Installation von ROS2
-Das Robot Operating System (ROS) ist eine Open-Source-Plattform für die Entwicklung von Robotikanwendungen, die aus einer Sammlung von Software-Bibliotheken, Werkzeugen und Treibern besteht. Es gibt verschiedene Versionen. Wegen längerem Support empfiehlt es sich derzeit "Humble Hawksbill" zu installieren.
+Das Robot Operating System (ROS) ist eine Open-Source-Plattform für die Entwicklung von Robotikanwendungen, die aus einer Sammlung von Software-Bibliotheken, Werkzeugen und Treibern besteht. Es gibt verschiedene Versionen. Wegen längerem Support empfiehlt es sich derzeit "Jazzy Jalisco" zu installieren.
 
 ROS2 gibt es für verschiedene Betriebssysteme. Für Ubuntu folgt man dieser Anleitung:
 https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html
-Wichtig ist, die passende Ubuntu-Version zu haben (hier 22.04).
+Wichtig ist, die passende Ubuntu-Version zu haben (hier 24.04).
 
 ```
-$ sudo apt install ros-humble-desktop
+$ sudo apt install ros-jazzy-desktop
 ```
 
 ```
@@ -29,8 +29,9 @@ Man entpackt das heruntergeladene tar.gz-Archiv und wechselt in den Ordner:
 
 Ggf. müssen vor der Installation noch einige Abhängigkeiten installiert werden:
 ```
+~/downloads/openhaptics_3.4-0-developer-edition-amd64 $ echo "deb http://security.ubuntu.com/ubuntu focal-security main universe" | sudo tee /etc/apt/sources.list.d/ubuntu-focal-sources.list
 ~/downloads/openhaptics_3.4-0-developer-edition-amd64 $ sudo apt update
-~/downloads/openhaptics_3.4-0-developer-edition-amd64 $ sudo apt install libncurses5 libncurses5-dev freeglut3-dev build-essential
+~/downloads/openhaptics_3.4-0-developer-edition-amd64 $ sudo apt install libncurses5 libncurses-dev freeglut3-dev build-essential
 ```
 
 Nun führt man das Installationsskript aus (benötigt Root-Rechte) und folgt den Anweisungen:
@@ -61,40 +62,40 @@ Falls man eine Fehlermeldung bekommt vonwegen "unknown: !=", kann man folgendes 
 Der Sourcecode des ROS2-Treibers befindet sich in diesem Repository. Man lädt
 es z.B. über die Github-Webseite runter ("<> Code" - "Download zip").
 
-Nach dem Entpacken ...
+Am besten entpäckt man es in einen eigenen Ordner, da die Dateien zur Laufzeit
+noch benötigt werden:
 ```
-~/downloads $ unzip Geomagic_Touch_ROS2-main
-```
-
-...wechselt man in den Ordner:
-```
-~/downloads $ cd Geomagic_Touch_ROS2
+~/ $ mkdir touch_haptic_device
+~/ $ cd touch_haptic_device
+~/touch_haptic_device $ unzip Geomagic_Touch_ROS2-main
+~/touch_haptic_device $ cd Geomagic_Touch_ROS2
 ```
 
 Um ROS2 nach der Installation zu nutzen, muss die ROS2-Umgebung initialisiert werden. Dies geschieht durch das Laden der entsprechenden Umgebungsvariablen mit dem folgendem Befehl. Das ist immer nötig, wenn ein neues Terminal geöffnet wird.
 
 ```
-~/downloads/Geomagic_Touch_ROS2 $ source /opt/ros/humble/setup.bash
+~/touch_haptic_device/Geomagic_Touch_ROS2 $ source /opt/ros/jazzy/setup.bash
 ```
 
 Jetzt kann der ROS2-Treiber kompiliert werden:
 ```
-~/downloads/Geomagic_Touch_ROS2 $ colcon build --symlink-install --event-handlers console_cohesion+
+~/touch_haptic_device/Geomagic_Touch_ROS2 $ colcon build --symlink-install --event-handlers console_cohesion+
 ```
 
 Nach einer Weile sollte das fehlerfrei durchgelaufen sein. Man kann den ROS2-Treiber jetzt installieren:
 ```
-~/downloads/Geomagic_Touch_ROS2 $ source install/setup.bash
+~/touch_haptic_device/Geomagic_Touch_ROS2 $ source install/setup.bash
 ```
 
 Zu guter Letzt empfiehlt es sich, die folgenden Zeilen ans Ende der Datei `~/.bashrc` hinzuzufügen, damit die Umgebungen automatisch bereitstehen und man sich das händische Sourcen sparen kann:
 
 ```
-# Source ROS 2 Humble setup
-source /opt/ros/humble/setup.bash
+# Source ROS 2 Jazzy setup
+source /opt/ros/jazzy/setup.bash
 # Source Geogamic Touch setup
-source ~/downloads/Geomagic_Touch_ROS2/install/setup.bash`
+source ~/touch_haptic_device/Geomagic_Touch_ROS2/install/setup.bash`
 ```
+
 # Verwendung
 Wenn alles richtig installiert wurde, kann man den ROS2-Treiber wie folgt verwenden.
 Zuerst lädt man den ROS2-Treiber. Das funktioniert nur dann fehlerfrei, wenn das Haptic Device per USB verbunden ist.
@@ -113,7 +114,7 @@ Wenn alles gut geht, sollte man einen ähnlichen Output sehen:
 [omni_state-1] [INFO] [1734536088.393056213] [omni_haptic_node]: Publishing joint state on: phantom/joint_states
 [omni_state-1] [INFO] [1734536088.393097152] [omni_haptic_node]: PHaNTOM position given in [mm], ratio [1.0]
 [omni_state-1] [INFO] [1734536088.393113172] [omni_haptic_node]: Publishing PHaNTOM state at [1000] Hz
-[omni_state-1] $GTDD_HOME not set. Using Default value : /home/paul/.3dsystems
+[omni_state-1] $GTDD_HOME not set. Using Default value : /home/administrator/.3dsystems
 [omni_state-1] : Success
 ```
 
