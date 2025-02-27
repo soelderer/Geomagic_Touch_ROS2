@@ -1,5 +1,8 @@
 # Geomagic_Touch_ROS2
 
+This is a slightly patched version of Ivo Dekker's original driver found
+here: https://github.com/IvoD1998/Geomagic_Touch_ROS2. Please check out his work.
+
 # Installation von ROS2
 Das Robot Operating System (ROS) ist eine Open-Source-Plattform für die Entwicklung von Robotikanwendungen, die aus einer Sammlung von Software-Bibliotheken, Werkzeugen und Treibern besteht. Es gibt verschiedene Versionen. Wegen längerem Support empfiehlt es sich derzeit "Jazzy Jalisco" zu installieren.
 
